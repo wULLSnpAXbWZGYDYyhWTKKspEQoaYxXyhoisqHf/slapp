@@ -1,0 +1,9 @@
+venv/
+.venv/
+.direnv
+*.retry
+*.pyc
+*.pyo
+.*.swp
+.*.swo
+.DS_Store

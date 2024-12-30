@@ -1,0 +1,54 @@
+---
+fail_fast: false
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-merge-conflict
+  - repo: local
+    hooks:
+      - id: pre-commit-validate-config
+        name: pre-commit validate config
+        entry: pre-commit validate-config
+        pass_filenames: false
+        files: '^.pre-commit-config.yaml$'
+        language: system
+      - id: ruff
+        name: ruff check --fix
+        pass_filenames: false
+        language: system
+        entry: |
+          ruff check --fix
+      - id: ruff-format-diff
+        name: ruff format --diff
+        pass_filenames: false
+        language: system
+        entry: |
+          ruff format --diff
+      - id: ruff-format
+        name: ruff format --check
+        pass_filenames: false
+        language: system
+        entry: |
+          ruff format --check
+      # TODO: add tests.
+      #- id: pytest
+      #  name: pytest
+      #  pass_filenames: false
+      #  language: system
+      #  entry: |
+      #    pytest
+      - id: nix-fmt
+        name: nix fmt
+        entry: nix fmt -- --check .
+        always_run: false
+        pass_filenames: false
+        files: '\.*.nix$'
+        language: system
+      - id: flake-check
+        name: nix flake check
+        entry: nix flake check --keep-going
+        always_run: false
+        pass_filenames: false
+        files: "flake.(nix|lock)$"
+        language: system
